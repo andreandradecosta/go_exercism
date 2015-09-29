@@ -5,31 +5,28 @@ import "fmt"
 //TestVersion checks if this code is running on the right test.
 const TestVersion = 2
 
-//Clock represents a hour and minute withou a date
-type Clock struct {
-	Hour, Minute int
-}
+//Clock represents a hour and minute without a date.
+//This implementation stores the total minutes of a day
+type Clock int
 
-func (m modulo) addModulo(mod int, a int) int {
+const day = 24 * 60
 
+func convModulo(val int) int {
+	return ((val % day) + day) % day
 }
 
 //Time returns a clock with the corresponding hour and minutes
 func Time(hour, minute int) Clock {
-	hour = hour % 24
-	extraHour := minute / 60
-	hour = hour + extraHour
-	if hour < 0 {
-		hour = 24 + hour
-	}
-	return Clock{hour, minute % 60}
+	return Clock(convModulo(day + hour*60 + minute))
 }
 
 //Add minutes to this clock
 func (c Clock) Add(minutes int) Clock {
-	return c
+	return Clock(convModulo(int(c) + minutes))
 }
 
 func (c Clock) String() string {
-	return fmt.Sprintf("%02d:%02d", c.Hour, c.Minute)
+	h := int(c) / 60
+	m := int(c) % 60
+	return fmt.Sprintf("%02d:%02d", h, m)
 }
