@@ -5,15 +5,27 @@ package triangle
 import "math"
 
 // Kind represents a type of a triangle
-type Kind string
+type Kind int
 
 // Types of triangles
 const (
-	NaT Kind = "NaT"
-	Equ Kind = "Equ"
-	Iso Kind = "Iso"
-	Sca Kind = "Sca"
+	NaT Kind = iota
+	Equ
+	Iso
+	Sca
 )
+
+func (k Kind) String() string {
+	switch k {
+	case Equ:
+		return "equilateral"
+	case Iso:
+		return "isosceles"
+	case Sca:
+		return "scalene"
+	}
+	return "not a triangle"
+}
 
 func validNumbers(a, b, c float64) bool {
 	return !math.IsNaN(a) &&
