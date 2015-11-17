@@ -1,8 +1,6 @@
 package diffsquares
 
-type sum func(int)
-
-func iterate(n int, op sum) {
+func iterate(n int, op func(int)) {
 	for i := 1; i <= n; i++ {
 		op(i)
 	}
