@@ -4,30 +4,22 @@ import "strconv"
 
 var handshakes = [4]string{"wink", "double blink", "close your eyes", "jump"}
 
-const reverse = 4
+const reverse = 5
 
 func Handshake(n int) []string {
 	var result []string
-	if n >= 0 {
-		binReversed := reverseString(strconv.FormatInt(int64(n), 2))
-		for i := 0; i < len(binReversed) && i < len(handshakes); i++ {
+	if n > 0 {
+		binReversed := strconv.FormatInt(int64(n), 2)
+		for i, j := len(binReversed)-1, 0; i >= 0 && j < len(handshakes); i, j = i-1, j+1 {
 			if string(binReversed[i]) == "1" {
-				result = append(result, handshakes[i])
+				result = append(result, handshakes[j])
 			}
 		}
-		if len(binReversed) > reverse && string(binReversed[reverse]) == "1" {
+		if len(binReversed) >= reverse && string(binReversed[len(binReversed)-reverse]) == "1" {
 			result = reverseSlice(result)
 		}
 	}
 	return result
-}
-
-func reverseString(str string) string {
-	runes := []rune(str)
-	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
-		runes[i], runes[j] = runes[j], runes[i]
-	}
-	return string(runes)
 }
 
 func reverseSlice(slice []string) []string {
