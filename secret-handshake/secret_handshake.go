@@ -6,6 +6,7 @@ var handshakes = [4]string{"wink", "double blink", "close your eyes", "jump"}
 
 const reverse = 5
 
+//Handshake returns a secret sequence based on the int passed. See README.md for details.
 func Handshake(n int) []string {
 	var result []string
 	if n > 0 {
